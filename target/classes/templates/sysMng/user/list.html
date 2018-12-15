@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head::html">
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body th:fragment="userFrm">
+	<div style="margin: 5px;">
+		<div class="layui-btn-group demoTable">
+			<button class="layui-btn" data-type="add">添加新用户</button>
+		</div>
+		<table class="layui-hide" id="userTable" lay-filter="demo"></table>
+ 	</div>
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" th:inline="none">  //thymeleaf会把[[]]中的内容作为内联取值块解析,而不是数组
+var p1 = new JLayui("ys", 12);
+p1.getHome();                   //ys's home in China
+console.log(p1.age);            //24    
+
+  layui.use('table', function(){
+      var table = layui.table;
+      table.render({
+          elem: '#userTable',
+          url:'/sysMng/user/findAllUser',
+          height: 715,
+          //method: 'post',
+          //contentType: 'application/json',
+          cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+          toolbar: true,
+          cols: [[
+              {field:'userName', width:100, title: '登录账号', sort: true},
+              {field:'name', width:80, title: '姓名'},
+              {field:'sex', width:80, title: '性别', sort: true},
+              {field:'mobile', width:100, title: '联系电话'},
+              {field:'email', title: '邮箱', minWidth: 100}, //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+              {field:'loginDate', title: '最后登录时间', sort: true},
+              {field:'professionalTitle', title: '职称', sort: true},
+              {field:'executiveLevel', title: '行政级别'},
+              {field:'enable', width:100, title: '是否可用', sort: true},
+              {fixed:'right', width:170, align: 'center', title: '操作', toolbar: '#barDemo'}
+          ]],
+          page: true,
+          limit: 15,
+          limits: [15, 30, 45, 60]
+      });
+      
+      //监听工具条
+      table.on('tool(demo)', function(obj){
+          var data = obj.data;
+          if(obj.event === 'detail'){
+              layer.msg('ID：'+ data.userName + ' 的查看操作');
+          } else if(obj.event === 'del'){
+              layer.confirm('真的删除行么', function(index){
+                obj.del();
+                layer.close(index);
+              });
+          } else if(obj.event === 'edit'){
+              // layer.alert('编辑行：<br>'+ JSON.stringify(data))
+              layer.open({
+                  //type: 2,
+                  title: '编辑用户信息',
+                  maxmin: true,
+                  shadeClose: false, //点击遮罩关闭层
+                  btnAlign: 'c',
+                  area : ['800px' , '520px'],
+	              anim: 1,
+	              btn: ['保存', '取消'],
+                  content: '/sysMng/user/detail?userName=' + data.userName,
+                  yes: function(index, layero){
+                      window.location.href = document.referrer;
+                  }
+              });
+          }
+      });
+      
+      var $ = layui.$, active = {
+ 		    add: function(){
+ 		    	layer.open({
+ 	                  type: 2,
+ 	                  title: '添加用户信息',
+ 	                  maxmin: true,
+ 	                  shadeClose: false, //点击遮罩关闭层
+ 	                  area : ['800px' , '520px'],
+ 	                  anim: 1,
+ 	                  content: '/sysMng/user/detail'
+ 	              });
+ 		    }
+ 		  };
+      
+      $('.demoTable .layui-btn').on('click', function(){
+    	    var type = $(this).data('type');
+    	    active[type] ? active[type].call(this) : '';
+    	  });
+  });
+</script>
+</body>
+</html>
