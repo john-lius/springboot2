@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Spring Boot</title>
+<style type="text/css">
+	.layout-fill {
+	    margin: 0;
+	    width: 100%;
+	    min-height: 100%;
+	    height: 100%;
+    }
+	header {
+		height: 50px;
+	}
+	footer {
+		height: 80px;
+	}
+	.login-logo {
+		background: url(static/img/login-logo.png) no-repeat;
+		margin-top: 30px;
+	    width: 100%;
+    	height: 28px;
+	}
+	.login-banner {
+		background: url(static/img/login-banner.png) no-repeat;
+		background-color: #116CC9;
+	    width: 100%;
+	}
+</style>
+</head>
+<body class="layout-fill">
+	<header>
+		<div class="login-logo"></div>
+	</header>
+	<section class="login-banner">
+		  <form action="/login" name="loginfrom" accept-charset="utf-8" method="post">
+		      <label class="label-tips" for="u">账号:</label>
+		      <input type="text" id="u" name="username" class="inputstyle"/>
+		      <div>
+		          <label class="lable-tips" for="password">密码:</label>
+		          <input type="password" id="password" name="password" class="inputstyle" />
+		      </div>
+		      <input type="submit" name="登录"/>
+		      <a href="register.html" class="zcxy" target="_blank">注册</a>
+		  </form>
+	</section>
+    <footer>
+        <strong>深圳迪聚海思科技有限公司</strong>
+        <span>Shenzhen DigiHealth Technology Co.Ltd</span>
+    </footer>
+</body>
+</html>
+<script th:inline="javascript">
+	var value = "123";
+	var message = [[${msg}]];  //js取后端返回的值写法
+	console.log(value);
+	console.log(message);
+</script>

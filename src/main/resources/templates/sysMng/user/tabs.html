@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head::html">
+<meta charset="UTF-8" />
+<title>spring boot</title>
+</head>
+<body>
+  <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+  <ul class="layui-tab-title">
+    <li class="layui-this">用户管理</li>
+    <li>用户组管理</li>
+  </ul>
+  <div class="layui-tab-content" style="height: 100px;">
+    <div class="layui-tab-item layui-show" th:include="sysMng/user/list :: userFrm"></div>
+    <div class="layui-tab-item" th:include="sysMng/role/list :: roleFrm"></div>
+  </div>
+</div>
+<script type="text/javascript">
+	layui.use('element', function(){
+	  var $ = layui.jquery, element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+	  //触发事件
+	  var active = {
+	    tabChange: function(){
+	      //切换到指定Tab项
+	      element.tabChange('demo', '22'); //切换到：用户管理
+	    }
+	  };
+	  
+	});
+</script>
+</body>
+</html>

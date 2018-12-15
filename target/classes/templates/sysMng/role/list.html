@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head::html">
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body th:fragment="roleFrm">
+	<div style="margin: 5px;">
+		<div class="layui-btn-group demoTable">
+			<button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
+			<button class="layui-btn" data-type="getCheckLength">获取选中数目</button>
+			<button class="layui-btn" data-type="isAll">验证是否全选</button>
+		</div>
+		<table class="layui-hide" id="roleTable" lay-filter="demo"></table>
+ 	</div>
+
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" th:inline="none">  //thymeleaf会把[[]]中的内容作为内联取值块解析,而不是数组
+  layui.use('table', function(){
+      var table = layui.table;
+      table.render({
+          elem: '#roleTable',
+          url:'/sysMng/role/findAllRole',
+          height: 715,
+          //method: 'post',
+          //contentType: 'application/json',
+          cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+          toolbar: true,
+          cols: [[
+              {field:'name', width:150, title: '用户组名称', sort: true},
+              {field:'name', title: '权限菜单'},
+              {fixed:'right', width:170, align: 'center', title: '操作', toolbar: '#barDemo'}
+          ]],
+          page: true,
+          limit: 15,
+          limits: [15, 30, 45, 60]
+      });
+      
+      //监听工具条
+      table.on('tool(demo)', function(obj){
+          var data = obj.data;
+          if(obj.event === 'detail'){
+              layer.msg('ID：'+ data.userName + ' 的查看操作');
+          } else if(obj.event === 'del'){
+              layer.confirm('真的删除行么', function(index){
+                obj.del();
+                layer.close(index);
+              });
+          } else if(obj.event === 'edit'){
+              // layer.alert('编辑行：<br>'+ JSON.stringify(data))
+              layer.open({
+                  type: 2,
+                  title: '编辑用户信息',
+                  maxmin: true,
+                  shadeClose: true, //点击遮罩关闭层
+                  area : ['800px' , '520px'],
+                  content: '/sysMng/user/detail?userName=' + data.userName
+              });
+          }
+      });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.digihealth.sysMng.dao.BasUserDao">
+	<resultMap id="BaseResultMap" type="com.digihealth.sysMng.entity.BasUser" >
+	    <id column="userName" property="userName" jdbcType="VARCHAR" />
+	    <result column="password" property="password" jdbcType="VARCHAR" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+	    <result column="email" property="email" jdbcType="VARCHAR" />
+	    <result column="photo" property="photo" jdbcType="VARCHAR" />
+	    <result column="loginIp" property="loginIp" jdbcType="VARCHAR" />
+	    <result column="loginDate" property="loginDate" jdbcType="TIMESTAMP" />
+	    <result column="createUser" property="createUser" jdbcType="VARCHAR" />
+	    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="locked" property="locked" jdbcType="INTEGER" />
+	    <result column="enable" property="enable" jdbcType="INTEGER" />
+	    <result column="salt" property="salt" jdbcType="VARCHAR" />
+	    <result column="token" property="token" jdbcType="VARCHAR" />
+	    <result column="userType" property="userType" jdbcType="VARCHAR" />
+	    <result column="pinYin" property="pinYin" jdbcType="VARCHAR" />
+	    <result column="professionalTitle" property="professionalTitle" jdbcType="VARCHAR" />
+	    <result column="executiveLevel" property="executiveLevel" jdbcType="VARCHAR" />
+	    <result column="roleId" property="roleId" jdbcType="INTEGER" />
+	    <result column="roleName" property="roleName" jdbcType="VARCHAR" />
+	    <result column="roleType" property="roleType" jdbcType="VARCHAR" />
+	    <result column="picPath" property="picPath" jdbcType="VARCHAR" />
+	    <result column="formal" property="formal" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+	    userName, password, name, mobile, email, photo, loginIp, loginDate, createUser, 
+	    createDate, locked, enable, salt, token, userType, pinYin, professionalTitle, executiveLevel,picPath,formal
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="com.digihealth.sysMng.entity.BasUser" resultMap="BaseResultMap">
+		SELECT * FROM bas_user WHERE userName = #{userName}
+	</select>
+
+	<select id="verifyUser" parameterType="com.digihealth.sysMng.entity.BasUser" resultType="com.digihealth.sysMng.entity.BasUser">
+		SELECT * FROM bas_user WHERE userName = #{userName} AND password = #{password}
+	</select>
+
+	<select id="getAllUser" resultType="com.digihealth.sysMng.entity.BasUser">
+		SELECT * FROM bas_user
+		where 1=1
+		<if test="formBean.page != null and formBean.limit != null">LIMIT #{formBean.page}, #{formBean.limit}</if>
+	</select>
+
+	<select id="getTotalAllUser" resultType="java.lang.Integer">
+		SELECT count(*) FROM bas_user;
+	</select>
+
+	<update id="updateByPrimaryKey" parameterType="com.digihealth.sysMng.entity.BasUser" >
+	    update bas_user
+	    set password = #{password,jdbcType=VARCHAR},
+	      name = #{name,jdbcType=VARCHAR},
+	      mobile = #{mobile,jdbcType=VARCHAR},
+	      email = #{email,jdbcType=VARCHAR},
+	      photo = #{photo,jdbcType=VARCHAR},
+	      loginIp = #{loginIp,jdbcType=VARCHAR},
+	      loginDate = #{loginDate,jdbcType=TIMESTAMP},
+	      createUser = #{createUser,jdbcType=VARCHAR},
+	      createDate = #{createDate,jdbcType=TIMESTAMP},
+	      locked = #{locked,jdbcType=INTEGER},
+	      enable = #{enable,jdbcType=INTEGER},
+	      salt = #{salt,jdbcType=VARCHAR},
+	      token = #{token,jdbcType=VARCHAR},
+	      userType = #{userType,jdbcType=VARCHAR},
+	      pinYin = #{pinYin,jdbcType=VARCHAR},
+	      professionalTitle = #{professionalTitle,jdbcType=VARCHAR},
+	      executiveLevel = #{executiveLevel,jdbcType=VARCHAR},
+	      picPath = #{picPath,jdbcType=VARCHAR},
+	      formal = #{formal,jdbcType=INTEGER}
+	    where userName = #{userName,jdbcType=VARCHAR}
+	</update>
+</mapper>

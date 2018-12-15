@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/head::html">
+<meta charset="UTF-8" />
+<title>spring boot</title>
+</head>
+<body>
+  <div class="detail-form">
+  	<form class="layui-form" action="#" th:action="@{/sysMng/user/update}" method="post">
+  	  <input type="hidden" name="password" th:field="*{user.password}" autocomplete="off" class="layui-input">
+	  <div class="layui-form-item">
+	  	<div class="layui-inline">
+		    <label class="layui-form-label">账号</label>
+		    <div class="layui-input-inline">
+		      <input type="text" name="userName" th:field="*{user.userName}" lay-verify="userName" autocomplete="off" class="layui-input">
+		    </div>
+		</div>
+	  	<div class="layui-inline">
+		    <label class="layui-form-label">姓名</label>
+		    <div class="layui-input-inline">
+		      <input type="text" name="name" th:field="*{user.name}" lay-verify="name" autocomplete="off" class="layui-input">
+		    </div>
+		</div>
+	  </div>
+	  <div class="layui-form-item">
+	    <div class="layui-inline">
+	        <label class="layui-form-label">用户类型</label>
+		    <div class="layui-input-inline">
+		      <select name="userType" th:field="*{user.userType}" lay-filter="aihao">
+		        <option value=""></option>
+		        <option th:each="item,c:${userTypes}" th:value="${item.codeValue}" th:text="${item.codeName}"></option>
+		      </select>
+		    </div>
+	    </div>
+	    <div class="layui-inline">
+	        <label class="layui-form-label">行政级别</label>
+		    <div class="layui-input-inline">
+		      <select name="executiveLevel" th:field="*{user.executiveLevel}" lay-filter="aihao">
+		        <option value=""></option>
+		        <option th:each="item,c:${executiveLevels}" th:value="${item.codeValue}" th:text="${item.codeName}"></option>
+		      </select>
+		    </div>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <label class="layui-form-label">用户职称</label>
+		  <div class="layui-input-inline">
+		      <select name="professionalTitle" th:field="*{user.professionalTitle}" lay-filter="aihao">
+		        <option value=""></option>
+		        <option th:each="item,c:${professionalTitles}" th:value="${item.codeValue}" th:text="${item.codeName}"></option>
+		      </select>
+		  </div>
+	    </div>
+	    <div class="layui-inline">
+	      <label class="layui-form-label">用户组</label>
+	      <div class="layui-input-inline">
+		      <select name="roleId" th:field="*{user.roleId}" lay-filter="aihao">
+		        <option value=""></option>
+		        <option th:each="item,c:${roles}" th:value="${item.id}" th:text="${item.name}"></option>
+		      </select>
+		  </div>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <label class="layui-form-label">电话</label>
+	      <div class="layui-input-inline">
+	        <input type="tel" name="mobile" lay-verify="mobile" th:field="*{user.mobile}" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	    <div class="layui-inline">
+	      <label class="layui-form-label">电子签名</label>
+	      <div class="layui-input-inline">
+	        <input type="text" name="picPath" lay-verify="picPath" th:field="*{user.picPath}" autocomplete="off" class="layui-input">
+	      </div>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <div class="layui-inline">
+	      <label class="layui-form-label">是否可用</label>
+		    <div class="layui-input-block">
+		      <input type="radio" name="enable" th:field="*{user.enable}" value="1" title="是">
+		      <input type="radio" name="enable" th:field="*{user.enable}" value="0" title="否">
+		    </div>
+	    </div>
+	  </div>
+	  <div class="layui-form-item">
+	    <div class="layui-input-block">
+	      <button type="submit" class="layui-btn" lay-filter="user">保存</button>
+	      <button class="layui-btn layui-btn-primary" id="closeIframe">取消</button>
+	    </div>
+	  </div>
+	</form>
+  </div>
+
+<script type="text/javascript">
+	layui.use(['form', 'layedit', 'laydate'], function(){
+		var form = layui.form, layer = layui.layer, layedit = layui.layedit, laydate = layui.laydate;
+		  laydate.render({
+		    elem: '#date'
+		  });
+
+		  //监听指定开关
+		  form.on('switch(switchTest)', function(data){
+		    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+		      offset: '6px'
+		    });
+		    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+		  });
+
+		  //监听提交
+		  /*form.on('submit(user)', function(data){
+		  	var params = data.field;
+		  	console.log(data);
+		  	layer.close(layer.index);
+          	layer.msg('添加成功！');
+		    /*$.ajax({
+		    	url: '/sysMng/update',
+		    	type: 'POST',
+		    	dataType: "json",
+		    	contentType: 'application/json;charset=UTF-8',
+		    	data: JSON.stringify(params),
+		    	success: function (result){
+		    		console.log(result);
+		    	}
+		  	});
+		  	
+		  });*/
+		  
+		  $("#closeIframe").click(function (){
+			  console.log(666);
+			  var index = parent.layer.getFrameIndex(window.name);
+			  console.log(index);
+			  window.parent.location.replace(location.href)//刷新父级页面
+			  //parent.layer.close(index);//关闭当前页  
+		  })
+	});
+
+</script>
+</body>
+</html>

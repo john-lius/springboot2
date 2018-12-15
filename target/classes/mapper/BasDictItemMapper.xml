@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.digihealth.basedata.dao.BasDictItemDao">
+	<resultMap id="BaseResultMap" type="com.digihealth.basedata.entity.BasDictItem" >
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="groupId" property="groupId" jdbcType="VARCHAR" />
+	    <result column="codeValue" property="codeValue" jdbcType="VARCHAR" />
+	    <result column="codeName" property="codeName" jdbcType="VARCHAR" />
+	    <result column="order" property="order" jdbcType="INTEGER" />
+	    <result column="enable" property="enable" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+	    id, groupId, codeValue, codeName, order, enable
+	</sql>
+
+	<select id="selectByPrimaryKey" parameterType="com.digihealth.basedata.entity.BasDictItem" resultMap="BaseResultMap">
+		SELECT * FROM bas_sys_dict_item WHERE id = #{id}
+	</select>
+
+	<select id="queryListByGroupId" resultType="com.digihealth.basedata.entity.BasDictItem">
+		SELECT * FROM bas_sys_dict_item where groupId = #{groupId};
+	</select>
+
+	<update id="updateByPrimaryKey" parameterType="com.digihealth.basedata.entity.BasDictItem" >
+	    update bas_sys_dict_item
+	    set groupId = #{groupId,jdbcType=VARCHAR},
+	      codeValue = #{codeValue,jdbcType=VARCHAR},
+	      codeName = #{codeName,jdbcType=VARCHAR},
+	      order = #{order,jdbcType=INTEGER},
+	      enable = #{enable,jdbcType=INTEGER}
+	    where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
