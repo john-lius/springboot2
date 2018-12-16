@@ -6,7 +6,7 @@
 </head>
 <body>
   <div class="detail-form">
-  	<form class="layui-form" method="post">
+  	<form class="layui-form" action="#" th:action="@{/sysMng/user/update}" method="post">
   	  <input type="hidden" name="password" th:field="*{user.password}" autocomplete="off" class="layui-input">
 	  <div class="layui-form-item">
 	  	<div class="layui-inline">
@@ -87,7 +87,7 @@
 	  </div>
 	  <div class="layui-form-item">
 	    <div class="layui-input-block">
-	      <button class="layui-btn" lay-submit="" lay-filter="user">保存</button>
+	      <button type="submit" class="layui-btn" lay-filter="user">保存</button>
 	      <button class="layui-btn layui-btn-primary" id="closeIframe">取消</button>
 	    </div>
 	  </div>
@@ -110,37 +110,30 @@
 		  });
 
 		  //监听提交
-		  form.on('submit(user)', function(data){
+		  /*form.on('submit(user)', function(data){
 		  	var params = data.field;
 		  	console.log(data);
-		    $.ajax({
-		    	url: '/sysMng/user/update',
+		  	layer.close(layer.index);
+          	layer.msg('添加成功！');
+		    /*$.ajax({
+		    	url: '/sysMng/update',
 		    	type: 'POST',
 		    	dataType: "json",
 		    	contentType: 'application/json;charset=UTF-8',
 		    	data: JSON.stringify(params),
 		    	success: function (result){
-		    		layer.tips("张三你好", '#id', 
-		    	              { 
-		    	                time: 0, 
-		    	                tips: [1, '#ff9800'], 
-		    	                tipsMore: true ,
-		    	                success: function(lay, index){
-		    	                	$(lay["selector"]).css({"cursor":"pointer","user-select":"none"});
-		    	                	$(lay["selector"]).click(function(){
-		    	                		 layer.close(index);
-		    	                	});
-		    	                }
-		    	              }
-		    	     );
+		    		console.log(result);
 		    	}
 		  	});
 		  	
-		  });
+		  });*/
 		  
 		  $("#closeIframe").click(function (){
+			  console.log(666);
 			  var index = parent.layer.getFrameIndex(window.name);
-			  parent.layer.close(index);//关闭当前页  
+			  console.log(index);
+			  window.parent.location.replace(location.href)//刷新父级页面
+			  //parent.layer.close(index);//关闭当前页  
 		  })
 	});
 

@@ -1,10 +1,6 @@
 package com.digihealth.sysMng.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +16,6 @@ import com.digihealth.sysMng.service.BasRoleService;
 
 @RestController
 @RequestMapping("sysMng/role")
-@Api(value="BasRoleController")
 public class BasRoleController {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
@@ -33,9 +28,8 @@ public class BasRoleController {
         return mv;
 	}
 
-	@ResponseBody
 	@RequestMapping("/findAllRole")
-	@ApiOperation(value="查询所有权限信息", httpMethod="POST", notes="查询所有权限信息")
+	@ResponseBody
 	public String findAllRole(Integer page, Integer limit) {
 		logger.info("==========begin findAllRole==========");
 		ResponseValue resp = new ResponseValue();

@@ -1,8 +1,5 @@
 package com.digihealth.sysMng.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +26,6 @@ import com.digihealth.sysMng.service.BasUserService;
 
 @RestController
 @RequestMapping("sysMng/user")
-@Api(value="BasUserController")
 public class BasUserController {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -41,9 +36,8 @@ public class BasUserController {
 	@Autowired
 	private BasRoleService basRoleService;
 
-	@ResponseBody
 	@RequestMapping("/findAllUser")
-	@ApiOperation(value="查询所有用户信息", httpMethod="POST", notes="查询所有用户信息")
+	@ResponseBody
 	public String findAllUser(Integer page, Integer limit) {
 		ResponseValue resp = new ResponseValue();
 		SystemSearchFormBean formBean = new SystemSearchFormBean();
@@ -98,13 +92,12 @@ public class BasUserController {
         return mv;
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	@ApiOperation(value="修改保存用户信息", httpMethod="POST", notes="修改保存用户信息")
-	public String update(@RequestBody BasUser entity) {
+	@ResponseBody
+	public String update(@ModelAttribute BasUser entity) {
 		logger.info("begin updateBasUser");
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("entity.userName::::::::::" + entity.getUserName());
+		System.out.println("entity::::::::::" + entity);
 		userService.updateByPrimaryKey(entity);
 		map.put("code", "0");
 		map.put("msg", "操作成功");

@@ -30,7 +30,7 @@ console.log(p1.age);            //24
           height: 715,
           //method: 'post',
           //contentType: 'application/json',
-          cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1新增
+          cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
           toolbar: true,
           cols: [[
               {field:'userName', width:100, title: '登录账号', sort: true},
@@ -62,18 +62,12 @@ console.log(p1.age);            //24
           } else if(obj.event === 'edit'){
               // layer.alert('编辑行：<br>'+ JSON.stringify(data))
               layer.open({
-                  //type: 2,
+                  type: 2,
                   title: '编辑用户信息',
                   maxmin: true,
-                  shadeClose: false, //点击遮罩关闭层
-                  btnAlign: 'c',
+                  shadeClose: true, //点击遮罩关闭层
                   area : ['800px' , '520px'],
-	              anim: 1,
-	              btn: ['保存', '取消'],
-                  content: '/sysMng/user/detail?userName=' + data.userName,
-                  yes: function(index, layero){
-                      window.location.href = document.referrer;
-                  }
+                  content: '/sysMng/user/detail?userName=' + data.userName
               });
           }
       });
@@ -84,9 +78,8 @@ console.log(p1.age);            //24
  	                  type: 2,
  	                  title: '添加用户信息',
  	                  maxmin: true,
- 	                  shadeClose: false, //点击遮罩关闭层
+ 	                  shadeClose: true, //点击遮罩关闭层
  	                  area : ['800px' , '520px'],
- 	                  anim: 1,
  	                  content: '/sysMng/user/detail'
  	              });
  		    }
